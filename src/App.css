@@ -1,0 +1,548 @@
+/* ========================= GLOBAL RESET ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  background: radial-gradient(circle at 10% 10%, rgba(124, 92, 255, 0.12), transparent 30%), radial-gradient(circle at 90% 90%, rgba(168, 85, 247, 0.1), transparent 30%), #f4f5fb;
+  color: #202124;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ========================= MAIN APP ========================= */
+.chat-app {
+  width: min(1240px, 94%);
+  height: 90vh;
+  min-height: 620px;
+  margin: 5vh auto;
+  display: flex;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 28px;
+  box-shadow: 0 25px 70px rgba(42, 35, 80, 0.12), 0 8px 25px rgba(42, 35, 80, 0.06);
+  position: relative;
+  transition: background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+/* ========================= CHAT MAIN ========================= */
+.chat-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.35s ease;
+}
+
+/* ========================= CHAT MESSAGES ========================= */
+.chat-messages {
+  flex: 1;
+  min-height: 0;
+  padding: 32px 34px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  background: radial-gradient(circle at 50% 0%, rgba(124, 92, 255, 0.035), transparent 45%), #ffffff;
+  transition: background 0.35s ease;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 7px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #d8d9e7;
+  border-radius: 20px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: #b9b8d0;
+}
+
+/* ========================= WELCOME SCREEN ========================= */
+.welcome-screen {
+  width: 100%;
+  max-width: 900px;
+  min-height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 45px 20px;
+  animation: welcomeFadeIn 0.5s ease;
+}
+
+/* ========================= WELCOME AVATAR ========================= */
+.welcome-avatar {
+  width: 82px;
+  height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #8175ff, #6255e8);
+  font-size: 40px;
+  box-shadow: 0 15px 35px rgba(108, 99, 255, 0.28);
+  animation: avatarFloat 3s ease-in-out infinite;
+}
+
+/* ========================= WELCOME CONTENT ========================= */
+.welcome-content {
+  max-width: 650px;
+  text-align: center;
+}
+
+.welcome-small-title {
+  margin-bottom: 6px;
+  color: #8b88a0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.welcome-content h2 {
+  margin-bottom: 12px;
+  color: #252338;
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.15;
+}
+
+.welcome-content h2 span {
+  font-size: 30px;
+}
+
+.welcome-description {
+  max-width: 560px;
+  margin: 0 auto;
+  color: #77758a;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ========================= SUGGESTION GRID ========================= */
+.suggestion-grid {
+  width: 100%;
+  max-width: 780px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 36px;
+}
+
+/* ========================= SUGGESTION CARD ========================= */
+.suggestion-card {
+  min-height: 112px;
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 13px;
+  align-items: center;
+  padding: 17px;
+  border: 1px solid #e9e7f3;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.85);
+  color: #363445;
+  text-align: left;
+  box-shadow: 0 5px 18px rgba(60, 54, 110, 0.035);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.suggestion-card:hover {
+  transform: translateY(-5px);
+  border-color: #d8d3ff;
+  background: #ffffff;
+  box-shadow: 0 14px 32px rgba(74, 66, 145, 0.12);
+}
+
+.suggestion-card:active {
+  transform: translateY(-2px) scale(0.99);
+}
+
+/* ========================= SUGGESTION ICON ========================= */
+.suggestion-icon {
+  grid-row: 1 / 3;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f1efff, #eae7ff);
+  font-size: 21px;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.suggestion-card:hover .suggestion-icon {
+  transform: scale(1.08) rotate(-3deg);
+  background: linear-gradient(135deg, #e9e5ff, #ddd8ff);
+}
+
+/* ========================= SUGGESTION TEXT ========================= */
+.suggestion-card>span:not(.suggestion-icon) {
+  font-size: 14px;
+  font-weight: 700;
+  color: #363445;
+}
+
+.suggestion-card small {
+  margin-top: 3px;
+  color: #9693a5;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* ========================= WELCOME ANIMATIONS ========================= */
+@keyframes welcomeFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes avatarFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* ========================= DARK MODE ========================= */
+body.dark-mode {
+  background: radial-gradient(circle at 10% 10%, rgba(124, 92, 255, 0.12), transparent 30%), #0b0d16;
+  color: #f5f5f7;
+}
+
+body.dark-mode .chat-app {
+  background: #121521;
+  border-color: #24283a;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4), 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+body.dark-mode .chat-main {
+  background: #121521;
+}
+
+body.dark-mode .chat-messages {
+  background: radial-gradient(circle at 50% 0%, rgba(124, 92, 255, 0.06), transparent 45%), #121521;
+}
+
+body.dark-mode .chat-messages::-webkit-scrollbar-thumb {
+  background: #34384c;
+}
+
+body.dark-mode .chat-messages::-webkit-scrollbar-thumb:hover {
+  background: #484d66;
+}
+
+/* ========================= DARK WELCOME ========================= */
+body.dark-mode .welcome-content h2 {
+  color: #f5f3ff;
+}
+
+body.dark-mode .welcome-description {
+  color: #a5a5b7;
+}
+
+body.dark-mode .welcome-small-title {
+  color: #777b91;
+}
+
+body.dark-mode .suggestion-card {
+  background: #191d2c;
+  border-color: #2c3043;
+  color: #e7e6f0;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+}
+
+body.dark-mode .suggestion-card:hover {
+  background: #202438;
+  border-color: #49436f;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.22);
+}
+
+body.dark-mode .suggestion-card>span:not(.suggestion-icon) {
+  color: #e7e6f0;
+}
+
+body.dark-mode .suggestion-icon {
+  background: linear-gradient(135deg, #292542, #25213e);
+}
+
+body.dark-mode .suggestion-card:hover .suggestion-icon {
+  background: linear-gradient(135deg, #322d50, #2c2748);
+}
+
+body.dark-mode .suggestion-card small {
+  color: #85889a;
+}
+
+/* ========================= TABLET ========================= */
+@media (max-width: 900px) {
+  .chat-app {
+    width: 96%;
+    height: 94vh;
+    margin: 3vh auto;
+    border-radius: 22px;
+  }
+
+  .chat-messages {
+    padding: 26px 22px;
+  }
+}
+
+@media (max-width: 800px) {
+  .welcome-screen {
+    padding: 35px 16px;
+  }
+
+  .suggestion-grid {
+    gap: 11px;
+  }
+}
+
+/* ========================= MOBILE ========================= */
+@media (max-width: 700px) {
+  body {
+    background: #ffffff;
+  }
+
+  body.dark-mode {
+    background: #121521;
+  }
+
+  .chat-app {
+    width: 100%;
+    height: 100vh;
+    min-height: 0;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .chat-messages {
+    padding: 22px 16px;
+  }
+}
+
+/* ========================= MOBILE WELCOME ========================= */
+@media (max-width: 650px) {
+  .welcome-screen {
+    padding: 30px 10px;
+  }
+
+  .welcome-avatar {
+    width: 68px;
+    height: 68px;
+    margin-bottom: 17px;
+    border-radius: 20px;
+    font-size: 32px;
+  }
+
+  .welcome-content h2 {
+    font-size: 30px;
+    letter-spacing: -1px;
+  }
+
+  .welcome-content h2 span {
+    font-size: 24px;
+  }
+
+  .welcome-description {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .suggestion-grid {
+    grid-template-columns: 1fr;
+    margin-top: 26px;
+  }
+
+  .suggestion-card {
+    min-height: 82px;
+    padding: 14px;
+    border-radius: 15px;
+  }
+
+  .suggestion-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+}
+
+/* ========================= SMALL MOBILE ========================= */
+@media (max-width: 400px) {
+  .chat-messages {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .welcome-content h2 {
+    font-size: 27px;
+  }
+
+  .welcome-description {
+    font-size: 13px;
+  }
+
+  .suggestion-card {
+    grid-template-columns: 40px 1fr;
+    padding: 12px;
+  }
+
+  .suggestion-icon {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+
+.chat-suggestions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 16px 48px;
+  flex-wrap: wrap;
+}
+
+.chat-suggestions p {
+  width: 100%;
+  margin: 0 0 2px;
+  color: #8b8499;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.chat-suggestions button {
+  padding: 7px 11px;
+  border: 1px solid #e6e0f2;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #6d28d9;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chat-suggestions button:hover {
+  background: #f5f1ff;
+  border-color: #d8cdf5;
+  transform: translateY(-1px);
+}
+
+body.dark-mode .chat-suggestions p {
+  color: #91899f;
+}
+
+body.dark-mode .chat-suggestions button {
+  background: #211c2d;
+  border-color: #3d3550;
+  color: #c4b5fd;
+}
+
+body.dark-mode .chat-suggestions button:hover {
+  background: #29233a;
+  border-color: #51466a;
+}
+
+@media (max-width: 600px) {
+  .chat-suggestions {
+    margin-left: 0;
+  }
+
+  .chat-suggestions button {
+    font-size: 11px;
+    padding: 6px 9px;
+  }
+}
+
+
+
+.retry-btn {
+display: inline-flex;
+align-items: center;
+gap: 6px;
+margin: 6px 0 16px 48px;
+padding: 7px 12px;
+border: 1px solid #e6e0f2;
+border-radius: 9px;
+background: #ffffff;
+color: #6d28d9;
+font-size: 12px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.2s ease;
+}
+
+.retry-btn {
+background: #f5f1ff;
+border-color: #d8cdf5;
+transform: translateY(-1px);
+}
+
+.retry-btn {
+transform: scale(0.96);
+}
+
+body.dark-mode .retry-btn {
+background: #211c2d;
+border-color: #3d3550;
+color: #c4b5fd;
+}
+
+body.dark-mode .retry-btn {
+background: #29233a;
+border-color: #51466a;
+}
+
+@media (max-width: 600px) {
+.retry-btn {
+margin-left: 0;
+font-size: 11px;
+padding: 6px 10px;
+}
+}
