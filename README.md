@@ -49,35 +49,43 @@ Deployment
 GitHub
 Vercel
 🏗️ Project Structure
+
 AI-Noury/
 │
 ├── api/
-│   ├── chat.js
-│   ├── index.js
-│   └── transcribe.js
+│ ├── chat.js
+│ ├── index.js
+│ └── transcribe.js
 │
 ├── server/
-│   └── server.js
+│ └── server.js
 │
 ├── src/
-│   ├── components/
-│   ├── services/
-│   ├── App.jsx
-│   ├── App.css
-│   └── main.jsx
+│ ├── components/
+│ ├── services/
+│ ├── App.jsx
+│ ├── App.css
+│ └── main.jsx
 │
 ├── .env
 ├── .gitignore
 ├── package.json
 ├── vite.config.js
 └── README.md
+
 🚀 Getting Started
 1. Clone the repository
+
 git clone https://github.com/NouraTarek77/AI-Noury.git
+
 2. Open the project
+
 cd AI-Noury
+
 3. Install dependencies
+
 npm install
+
 4. Create environment variables
 
 Create a .env file in the project root:
@@ -89,11 +97,13 @@ Replace your_groq_api_key with your own Groq API key.
 Never upload your .env file or expose your API key publicly.
 
 5. Start the frontend
+
 npm run dev
 
 The frontend will normally run on:
 
 http://localhost:5173
+
 6. Start the backend
 
 Open another terminal and run:
@@ -103,6 +113,7 @@ node server/server.js
 The backend will run on:
 
 http://localhost:5000
+
 🔐 Environment Variables
 
 The application requires:
