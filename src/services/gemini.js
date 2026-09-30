@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api/chat";
+const API_URL = "https://ai-noury.vercel.app/api/chat";
 export async function sendMessageToAI(messages, onChunk, signal, memory = {}) {
   try {
     const response = await fetch(API_URL, {
