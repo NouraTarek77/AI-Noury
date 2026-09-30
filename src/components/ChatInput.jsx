@@ -1,6 +1,6 @@
 import "./ChatInput.css";
 import { useRef, useState } from "react";
-const API_URL = "http://localhost:5000";
+const API_URL = "https://ai-noury.vercel.app";
 function ChatInput({
   message,
   setMessage,
