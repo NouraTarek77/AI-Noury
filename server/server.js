@@ -110,6 +110,11 @@ Do not describe yourself as Gemini or Groq.
 Groq is only the service used by the application to generate your responses.
 `;
 
+
+// ========================================
+// VOICE TRANSCRIPTION
+// ========================================
+
 app.post(
   "/transcribe",
   upload.single("audio"),
@@ -121,33 +126,67 @@ app.post(
         });
       }
 
+      // Get selected language from frontend
+      const requestedLanguage =
+        typeof req.body.language === "string"
+          ? req.body.language
+          : "";
+
+      // Only allow Arabic or English
+      const language =
+        requestedLanguage === "ar" ||
+        requestedLanguage === "en"
+          ? requestedLanguage
+          : undefined;
+
+      console.log(
+        `🎤 Transcribing voice. Language: ${
+          language || "auto"
+        }`
+      );
+
       const transcription =
         await groq.audio.transcriptions.create({
           file: new File(
             [req.file.buffer],
             req.file.originalname || "recording.webm",
             {
-              type: req.file.mimetype || "audio/webm",
+              type:
+                req.file.mimetype ||
+                "audio/webm",
             }
           ),
+
           model: TRANSCRIPTION_MODEL,
+
           response_format: "json",
+
           temperature: 0,
+
+          ...(language && {
+            language,
+          }),
         });
 
-      const text = transcription?.text?.trim();
+      const text =
+        transcription?.text?.trim();
 
       if (!text) {
         return res.status(400).json({
-          error: "No speech could be detected.",
+          error:
+            "No speech could be detected.",
         });
       }
 
       return res.json({
         text,
       });
+
     } catch (error) {
-      console.error("❌ TRANSCRIPTION ERROR:", error);
+      console.error(
+        "❌ TRANSCRIPTION ERROR:",
+        error
+      );
 
       return res.status(500).json({
         error:
@@ -157,6 +196,11 @@ app.post(
     }
   }
 );
+
+
+// ========================================
+// CHAT
+// ========================================
 
 app.post("/chat", async (req, res) => {
   try {
@@ -200,6 +244,7 @@ app.post("/chat", async (req, res) => {
         if (role === "assistant") {
           return {
             role: "assistant",
+
             content:
               typeof msg.text === "string"
                 ? msg.text
@@ -213,17 +258,21 @@ app.post("/chat", async (req, res) => {
         ) {
           return {
             role: "user",
+
             content: [
               {
                 type: "text",
+
                 text:
                   typeof msg.text === "string" &&
                   msg.text.trim()
                     ? msg.text
                     : "Please analyze this image.",
               },
+
               {
                 type: "image_url",
+
                 image_url: {
                   url: msg.image,
                 },
@@ -234,6 +283,7 @@ app.post("/chat", async (req, res) => {
 
         return {
           role: "user",
+
           content:
             typeof msg.text === "string"
               ? msg.text
@@ -254,7 +304,8 @@ app.post("/chat", async (req, res) => {
 
     if (conversation.length === 0) {
       return res.status(400).json({
-        error: "No valid messages were provided",
+        error:
+          "No valid messages were provided",
       });
     }
 
@@ -298,16 +349,21 @@ Use this information naturally when relevant.
     const stream =
       await groq.chat.completions.create({
         model: selectedModel,
+
         reasoning_effort: "high",
+
         messages: [
           {
             role: "system",
+
             content:
               SYSTEM_PROMPT +
               memoryPrompt,
           },
+
           ...conversation,
         ],
+
         stream: true,
       });
 
@@ -336,6 +392,7 @@ Use this information naturally when relevant.
     }
 
     res.end();
+
   } catch (error) {
     console.error(
       "❌ GROQ STREAM ERROR:",
@@ -354,7 +411,17 @@ Use this information naturally when relevant.
   }
 });
 
+
+// ========================================
+// EXPORT
+// ========================================
+
 export default app;
+
+
+// ========================================
+// LOCAL SERVER
+// ========================================
 
 if (
   process.env.NODE_ENV !== "production"
