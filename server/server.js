@@ -152,10 +152,13 @@ app.post("/api/chat", async (req, res) => {
     res.end();
   }
 });
-const PORT = 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 AI Noury Server running on http://localhost:${PORT}`);
-  console.log(`💬 Text model: ${TEXT_MODEL}`);
-  console.log(`🖼️ Vision model: ${VISION_MODEL}`);
-  console.log(`🎤 Voice model: ${TRANSCRIPTION_MODEL}`);
-});
+export default app;
+if (process.env.NODE_ENV !== "production") {
+  const PORT = 5000;
+  app.listen(PORT, () => {
+    console.log(`🚀 AI Noury Server running on http://localhost:${PORT}`);
+    console.log(`💬 Text model: ${TEXT_MODEL}`);
+    console.log(`🖼️ Vision model: ${VISION_MODEL}`);
+    console.log(`🎤 Voice model: ${TRANSCRIPTION_MODEL}`);
+  });
+}
